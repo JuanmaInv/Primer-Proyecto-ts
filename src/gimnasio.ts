@@ -1,36 +1,49 @@
-// AGREGACION: El equipamiento puede existir sin el gimnasio
-class Equipamiento {
+// CONSTANTES: Evitamos números mágicos (Mejora 2)
+export const PRECIOS = {
+    CUOTA_BASE: 5000,
+    ADICIONAL_VIP: 2000
+};
+
+// AGREGACION
+export class Equipamiento {
     constructor(public nombre: string) { }
 }
 
-// CLASE BASE: Abstracta porque no existe un "Socio" genérico (Herencia)
-abstract class Socio {
+// CLASE BASE (Herencia)
+export abstract class Socio {
+    constructor(public id: number, public nombre: string) {
+        // VALIDACIONES: (Mejora 6)
+        if (id <= 0) throw new Error("El ID debe ser un número positivo.");
+        if (!nombre || nombre.trim().length === 0) throw new Error("El nombre no puede estar vacío.");
+    }
 
-    // CONSTRUCTOR: Inicializa los datos basicos
-    constructor(public id: number, public nombre: string) { }
-
-    // POLIMORFISMO: Cada socio paga diferente segun su tipo
+    // POLIMORFISMO
     abstract calcularCuota(): number;
 
-    // SOBRECARGA SIMULADA: Saludo con o sin mensaje
     saludar(mensaje?: string): string {
         return mensaje ? `Hola, soy ${this.nombre}. ${mensaje}` : `Hola, soy ${this.nombre}`;
+    }
+}
+
+// NUEVO TIPO DE SOCIO: (Mejora 1)
+export class SocioComun extends Socio {
+    calcularCuota(): number {
+        return PRECIOS.CUOTA_BASE;
     }
 }
 
 // HERENCIA y SOBREESCRITURA
 export class SocioVip extends Socio {
     constructor(id: number, nombre: string, public beneficios: string) {
-        super(id, nombre); // Llama al constructor del padre
+        super(id, nombre);
     }
 
-    // SOBREESCRITURA del metodo del padre
     calcularCuota(): number {
-        return 5000 + 2000; // Cuota base + extra VIP
+        return PRECIOS.CUOTA_BASE + PRECIOS.ADICIONAL_VIP;
     }
 }
 
-// COMPOSICION: El Gimnasio tiene socios (si el gimnasio cierra, la lista se borra)
+// MEJORAS EN GIMNASIO: (Mejora 4)
 export class Gimnasio {
     private listaSocios: Socio[] = [];
 
@@ -38,16 +51,25 @@ export class Gimnasio {
         this.listaSocios.push(socio);
     }
 
-    obtenerVips(): Socio[] { // FILTRO: Obtener solo los VIP
-        return this.listaSocios.filter(sociosVip => sociosVip instanceof SocioVip);
+    buscarSocio(id: number): Socio | undefined {
+        return this.listaSocios.find(s => s.id === id);
+    }
+
+    eliminarSocio(id: number) {
+        this.listaSocios = this.listaSocios.filter(s => s.id !== id);
+    }
+
+    obtenerVips(): SocioVip[] {
+        return this.listaSocios.filter((s): s is SocioVip => s instanceof SocioVip);
+    }
+
+    calcularIngresosTotales(): number {
+        return this.listaSocios.reduce((acc, s) => acc + s.calcularCuota(), 0);
+    }
+
+    listarSocios(): Socio[] {
+        return [...this.listaSocios];
     }
 }
 
-// Prueba para ver en consola
-const miGimnasio = new Gimnasio();
-const nuevoSocio = new SocioVip(10, "Juan Martin", "Musculacion y Pileta");
-
-miGimnasio.agregarSocio(nuevoSocio);
-console.log(nuevoSocio.saludar("El sistema funciono"));
-console.log(`Tu cuota mensual es de: $${nuevoSocio.calcularCuota()}`);
-console.log(`Beneficios activos: ${nuevoSocio.beneficios}`);
+// El código de ejecución manual fue eliminado para mejorar la separación de responsabilidades (Mejora 3)
