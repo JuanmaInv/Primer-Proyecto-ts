@@ -1,1 +1,4 @@
 node_modules
+# luego para cuando tengamos apis y no subirlas...
+.env
+.env.local
