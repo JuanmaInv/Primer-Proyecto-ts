@@ -42,3 +42,12 @@ export class Gimnasio {
         return this.listaSocios.filter(sociosVip => sociosVip instanceof SocioVip);
     }
 }
+
+// Prueba para ver en consola
+const miGimnasio = new Gimnasio();
+const nuevoSocio = new SocioVip(10, "Juan Martin", "Musculacion y Pileta");
+
+miGimnasio.agregarSocio(nuevoSocio);
+console.log(nuevoSocio.saludar("El sistema funciono"));
+console.log(`Tu cuota mensual es de: $${nuevoSocio.calcularCuota()}`);
+console.log(`Beneficios activos: ${nuevoSocio.beneficios}`);

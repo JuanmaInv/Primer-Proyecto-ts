@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx src/gestion.ts",
+    "dev": "tsx src/gimnasio.ts",
     "test": "vitest run"
   },
   "keywords": [],
