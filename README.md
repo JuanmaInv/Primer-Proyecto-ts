@@ -39,3 +39,10 @@ Creamos la carpeta tests/ y desarrollamos el archivo gimnasio.test.ts
 
 5. Automatización con CI
 Configuramos GitHub Actions creando el archivo .github/workflows/main.yml. Esto permite que GitHub ejecute los tests automáticamente cada vez que realizamos un push.
+
+EXTRA!!!
+Flujo de trabajo para el proximo proyecto:
+1. Crear carpeta nueva (ejemplo. "trabajito-ts").
+2. Copiar los archivos de configuración (package.json, tsconfig.json, .gitignore, .github/). Eliminar el node module.
+3. Ejecutar pnpm install (esto descargará todo automáticamente basándose en el package.json que copiaste e instalara nuevamente el node module).
+4. ¡Listo!, Empezar a programar la lógica de "gimnasio" y "tests" para el nuevo proyecto.
