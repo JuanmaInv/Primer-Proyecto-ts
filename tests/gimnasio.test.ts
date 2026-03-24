@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { SocioVip, SocioComun, Gimnasio, PRECIOS } from '../src/gimnasio';
+import { Gimnasio } from '../src/gimnasio';
+import { SocioComun } from '../src/socioComun';
+import { SocioVip } from '../src/socioVip';
+import { PRECIOS } from '../src/precios';
 
 describe('Pruebas de Gimnasio Mejorado', () => {
     let gym: Gimnasio;

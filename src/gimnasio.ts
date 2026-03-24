@@ -1,54 +1,13 @@
-// CONSTANTES: Evitamos números mágicos (Mejora 2)
-export const PRECIOS = {
-    CUOTA_BASE: 5000,
-    ADICIONAL_VIP: 2000
-};
+import { Socio } from "./socio";
+import { SocioVip } from "./socioVip";
 
-// AGREGACION
-export class Equipamiento {
-    constructor(public nombre: string) { }
-}
-
-// CLASE BASE (Herencia)
-export abstract class Socio {
-    constructor(public id: number, public nombre: string) {
-        // VALIDACIONES: (Mejora 6)
-        if (id <= 0) throw new Error("El ID debe ser un número positivo.");
-        if (!nombre || nombre.trim().length === 0) throw new Error("El nombre no puede estar vacío.");
-    }
-
-    // POLIMORFISMO
-    abstract calcularCuota(): number;
-
-    saludar(mensaje?: string): string {
-        return mensaje ? `Hola, soy ${this.nombre}. ${mensaje}` : `Hola, soy ${this.nombre}`;
-    }
-}
-
-// NUEVO TIPO DE SOCIO: (Mejora 1)
-export class SocioComun extends Socio {
-    calcularCuota(): number {
-        return PRECIOS.CUOTA_BASE;
-    }
-}
-
-// HERENCIA y SOBREESCRITURA
-export class SocioVip extends Socio {
-    constructor(id: number, nombre: string, public beneficios: string) {
-        super(id, nombre);
-    }
-
-    calcularCuota(): number {
-        return PRECIOS.CUOTA_BASE + PRECIOS.ADICIONAL_VIP;
-    }
-}
-
-// MEJORAS EN GIMNASIO: (Mejora 4)
+// Clase Gimnasio: gestiona la lista de socios y las operaciones del gimnasio
 export class Gimnasio {
     private listaSocios: Socio[] = [];
 
     agregarSocio(socio: Socio) {
         this.listaSocios.push(socio);
+        console.log(`[Registro] Se ha registrado a ${socio.nombre} (ID: ${socio.id}) como Socio ${socio.tipo}.`);
     }
 
     buscarSocio(id: number): Socio | undefined {
@@ -71,5 +30,3 @@ export class Gimnasio {
         return [...this.listaSocios];
     }
 }
-
-// El código de ejecución manual fue eliminado para mejorar la separación de responsabilidades (Mejora 3)
