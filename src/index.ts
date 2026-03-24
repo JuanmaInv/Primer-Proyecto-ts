@@ -18,10 +18,11 @@ miGimnasio.agregarSocio(socio1);
 miGimnasio.agregarSocio(socio2);
 miGimnasio.agregarSocio(socio3);
 
-// 4. Mostrar saludos
-console.log("\n--- Mostrar Saludos ---");
-console.log(socio1.saludar());
-console.log(socio2.saludar("¡Hoy toca entrenar duro!"));
+// 4. Mostrar información de los socios
+console.log("\n--- Info de Socios ---");
+console.log(socio1.mostrarInfo());
+console.log(socio2.mostrarInfo());
+console.log(socio3.mostrarInfo());
 
 // 5. Resumen del gimnasio
 console.log("\n--- Resumen del Gimnasio ---");

@@ -14,4 +14,9 @@ export class SocioVip extends Socio {
     calcularCuota(): number {
         return PRECIOS.CUOTA_BASE + PRECIOS.ADICIONAL_VIP;
     }
+
+    // POLIMORFISMO: sobreescribe mostrarInfo() para también mostrar los beneficios del VIP
+    mostrarInfo(): string {
+        return `Socio ${this.tipo} | ID: ${this.id} | Nombre: ${this.nombre} | Cuota: $${this.calcularCuota()} | Beneficios: ${this.beneficios}`;
+    }
 }

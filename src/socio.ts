@@ -13,10 +13,8 @@ export abstract class Socio {
     // POLIMORFISMO: cada clase hija tiene su propia implementacion de calcularCuota
     abstract calcularCuota(): number;
 
-    // Permite saludar a cualquier socio, sin importar su tipo
-    saludar(mensaje?: string): string {
-        return mensaje
-            ? `Hola, soy ${this.nombre} (${this.tipo}). ${mensaje}`
-            : `Hola, soy ${this.nombre} (${this.tipo})`;
+    // Devuelve información útil del socio: nombre, tipo y cuota
+    mostrarInfo(): string {
+        return `Socio ${this.tipo} | ID: ${this.id} | Nombre: ${this.nombre} | Cuota: $${this.calcularCuota()}`;
     }
 }

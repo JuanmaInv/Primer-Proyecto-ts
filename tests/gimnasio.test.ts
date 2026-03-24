@@ -26,6 +26,17 @@ describe('Pruebas de Gimnasio Mejorado', () => {
         expect(() => new SocioComun(1, "")).toThrow("El nombre no puede estar vacío.");
     });
 
+    // Tests del método mostrarInfo() definido en Socio
+    it('Debe mostrar la info correctamente para un Socio Común', () => {
+        const comun = new SocioComun(1, "Juan");
+        expect(comun.mostrarInfo()).toBe("Socio Común | ID: 1 | Nombre: Juan | Cuota: $5000");
+    });
+
+    it('Debe mostrar la info correctamente para un Socio VIP', () => {
+        const vip = new SocioVip(2, "María", "Spa");
+        expect(vip.mostrarInfo()).toBe("Socio VIP | ID: 2 | Nombre: María | Cuota: $7000 | Beneficios: Spa");
+    });
+
     // Test de Métodos de Gimnasio (Mejora 4)
     it('Debe gestionar correctamente la lista de socios', () => {
         const s1 = new SocioVip(1, "Juan", "Pileta");
