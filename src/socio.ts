@@ -8,6 +8,8 @@ export abstract class Socio {
         // VALIDACIONES DE ERRORES
         if (id <= 0) throw new Error("El ID debe ser un número positivo.");
         if (!nombre || nombre.trim().length === 0) throw new Error("El nombre no puede estar vacío.");
+        if (/[0-9]/.test(nombre)) throw new Error("El nombre no puede contener números.");
+        if (/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/.test(nombre)) throw new Error("El nombre no puede contener caracteres especiales.");
     }
 
     // POLIMORFISMO: cada clase hija tiene su propia implementacion de calcularCuota
