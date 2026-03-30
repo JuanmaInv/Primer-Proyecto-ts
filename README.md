@@ -18,15 +18,15 @@ Conceptos de POO y test con Vitest.
 Para construir este proyecto, seguimos un flujo de trabajo bien estructurado:
 1. Preparación del Entorno
 Instalamos las herramientas base para cualquier desarrollo moderno:
-    - Node.js (Motor de ejecución).
-    - pnpm (Gestor de paquetes eficiente).
-    - Git (Control de versiones).
+    - Node.js (Motor de ejecución) en https://nodejs.org/es.
+    - pnpm (Gestor de paquetes eficiente). (para instalarlo debo usar npm install -g pnpm en terminal cmd dentro de la carpeta raiz)
+    - Git (Control de versiones) en https://git-scm.com/downloads.
 
 2. Inicialización del Proyecto
 Dentro de la carpeta raíz, ejecutamos los comandos:
-    - pnpm init
-    - pnpm add -D typescript vitest tsx
-    - npx tsc --init
+    - pnpm init para inicializar el proyecto.
+    - pnpm add -D typescript vitest tsx para agregar dependencias de desarrollo.
+    - npx tsc --init para iniciar typescript.
 
 3. Desarrollo de Logica
 Creamos la carpeta src/ y desarrollamos el archivo gimnasio.ts aplicando algunos patrones de diseño (como Abstraccion, Herencia, Polimorfismo, Encapsulamiento y Composicion).
