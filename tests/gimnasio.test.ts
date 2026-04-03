@@ -55,34 +55,40 @@ describe('Pruebas de Gimnasio Mejorado', () => { // 'describe' es una funcion de
         expect(vip.mostrarInfo()).toBe("Socio VIP | ID: 2 | Nombre: María | Cuota: $7000 | Beneficios: Spa"); // verifico que la info sea correcta
     });
 
-    // Test de Gimnasio 
+    // Test de Gimnasio, verifico que el gimnasio funcione correctamente
     it('Debe gestionar correctamente la lista de socios', () => {
-        const s1 = new SocioVip(1, "Juan", "Pileta");
-        const s2 = new SocioComun(2, "Pedro");
+        const s1 = new SocioVip(1, "Juan", "Pileta"); // creo un socio vip
+        const s2 = new SocioComun(2, "Pedro"); // creo un socio comun
 
-        gym.agregarSocio(s1);
-        gym.agregarSocio(s2);
+        gym.agregarSocio(s1); // agrego el socio vip
+        gym.agregarSocio(s2); // agrego el socio comun
 
-        // Buscar
-        expect(gym.buscarSocio(1)).toBe(s1);
-        expect(gym.buscarSocio(3)).toBeUndefined();
+        // Buscar, aqui verifico que el gimnasio encuentre correctamente a los socios
+        expect(gym.buscarSocio(1)).toBe(s1); // verifico que el socio 1 sea encontrado
+        expect(gym.buscarSocio(2)).toBe(s2); // verifico que el socio 2 sea encontrado
+        expect(gym.buscarSocio(3)).toBeUndefined(); // verifico que el socio 3 no se encuentre en el gimnasio, pues no fue creado
 
-        // Ingresos Totales
-        const totalEsperado = s1.calcularCuota() + s2.calcularCuota();
-        expect(gym.calcularIngresosTotales()).toBe(totalEsperado);
+        // Ingresos Totales, aqui verifico que el gimnasio calcule correctamente los ingresos totales
+        const totalEsperado = s1.calcularCuota() + s2.calcularCuota(); // calculo los ingresos totales
+        expect(gym.calcularIngresosTotales()).toBe(totalEsperado); // verifico que los ingresos totales sean los esperados
 
-        // Eliminar
-        gym.eliminarSocio(1);
-        expect(gym.listarSocios().length).toBe(1);
-        expect(gym.buscarSocio(1)).toBeUndefined();
+        // Eliminar, aqui verifico que el gimnasio elimine correctamente a los socios
+        gym.eliminarSocio(1); // elimino el socio 1
+        expect(gym.listarSocios().length).toBe(1); // verifico que la lista de socios tenga 1 elemento (TENIAMOS DOS, PERO ELIMINE UNO)
+        expect(gym.buscarSocio(1)).toBeUndefined(); // verifico que el socio 1 no se encuentre en el gimnasio
+        expect(gym.listarSocios()).toEqual([s2]); // verifico que la lista de socios sea igual a [s2]
     });
 
+    // Test de Filtrado, verifico que el metodo obtenerVips() devuelva solo los socios VIP.... falta filtrado de socios comunes
     it('Debe filtrar solo socios VIP', () => {
         gym.agregarSocio(new SocioVip(1, "VIP", "Todo"));
         gym.agregarSocio(new SocioComun(2, "Comun"));
 
-        const vips = gym.obtenerVips();
-        expect(vips.length).toBe(1);
-        expect(vips[0] instanceof SocioVip).toBe(true);
+        const vips = gym.obtenerVips(); // obtengo los socios vip
+        expect(vips.length).toBe(1); // verifico que la lista de socios vip tenga 1 elemento
+        expect(vips[0] instanceof SocioVip).toBe(true); // verifico que el socio 1 sea vip
     });
+    //Test de filtrado socios comun
+    //Test de filtrado completo
+    //Deberia poder tener una lista con los socios del gym con su informacion completa
 });
