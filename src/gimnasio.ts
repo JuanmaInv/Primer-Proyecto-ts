@@ -1,5 +1,6 @@
 import { Socio } from "./socio";
 import { SocioVip } from "./socioVip";
+import { SocioComun } from "./socioComun";
 
 // Clase Gimnasio: gestiona la lista de socios y las operaciones del gimnasio
 export class Gimnasio {
@@ -20,6 +21,10 @@ export class Gimnasio {
 
     obtenerVips(): SocioVip[] {
         return this.listaSocios.filter((s): s is SocioVip => s instanceof SocioVip);
+    }
+
+    obtenerComunes(): SocioComun[] {
+        return this.listaSocios.filter((s): s is SocioComun => s instanceof SocioComun);
     }
 
     calcularIngresosTotales(): number {

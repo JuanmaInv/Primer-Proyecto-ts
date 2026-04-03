@@ -88,7 +88,59 @@ describe('Pruebas de Gimnasio Mejorado', () => { // 'describe' es una funcion de
         expect(vips.length).toBe(1); // verifico que la lista de socios vip tenga 1 elemento
         expect(vips[0] instanceof SocioVip).toBe(true); // verifico que el socio 1 sea vip
     });
-    //Test de filtrado socios comun
-    //Test de filtrado completo
-    //Deberia poder tener una lista con los socios del gym con su informacion completa
+
+    // Test de filtrado socios comun
+    it('Debe filtrar solo socios Comunes', () => {
+        gym.agregarSocio(new SocioVip(1, "VIP", "Todo"));
+        gym.agregarSocio(new SocioComun(2, "Comun"));
+        gym.agregarSocio(new SocioComun(3, "OtroComun"));
+
+        const comunes = gym.obtenerComunes(); // obtengo los socios comunes
+        expect(comunes.length).toBe(2); // verifico que la lista tenga 2 socios comunes
+        expect(comunes[0] instanceof SocioComun).toBe(true); // verifico que el socio 1 sea comun
+        expect(comunes[1] instanceof SocioComun).toBe(true); // verifico que el socio 2 sea comun
+    });
+
+    // Test de filtrado completo: VIPs + Comunes cubren todos los socios del gym
+    it('El filtrado completo de VIPs y Comunes debe coincidir con la lista total', () => {
+        const s1 = new SocioVip(1, "VIP", "Pileta");
+        const s2 = new SocioComun(2, "Comun");
+        const s3 = new SocioVip(3, "OtroVIP", "Spa");
+        const s4 = new SocioComun(4, "OtroComun");
+
+        gym.agregarSocio(s1);
+        gym.agregarSocio(s2);
+        gym.agregarSocio(s3);
+        gym.agregarSocio(s4);
+
+        const vips = gym.obtenerVips();
+        const comunes = gym.obtenerComunes();
+        const total = gym.listarSocios();
+
+        // La suma de VIPs + Comunes debe ser igual al total de socios
+        expect(vips.length + comunes.length).toBe(total.length);
+        // Todos los socios del gym deben aparecer en alguna de las dos listas
+        total.forEach(socio => {
+            const estaEnLista = vips.includes(socio as SocioVip) || comunes.includes(socio as SocioComun);
+            //includes es una palabra reservada de typescript que sirve para verificar si un elemento esta en un array
+            //en este caso verifica si el socio esta en la lista de vip o en la lista de comunes
+            expect(estaEnLista).toBe(true);
+        });
+    });
+
+    // Debe poder obtener una lista con la informacion completa de todos los socios del gym
+    it('Debe listar la informacion completa de todos los socios del gym', () => {
+        const s1 = new SocioComun(1, "Ana");
+        const s2 = new SocioVip(2, "Carlos", "Spa");
+
+        gym.agregarSocio(s1);
+        gym.agregarSocio(s2);
+
+        const infoList = gym.listarSocios().map(s => s.mostrarInfo()); // obtengo la info de cada socio
+
+        expect(infoList).toEqual([
+            "Socio Común | ID: 1 | Nombre: Ana | Cuota: $5000",
+            "Socio VIP | ID: 2 | Nombre: Carlos | Cuota: $7000 | Beneficios: Spa"
+        ]);
+    });
 });

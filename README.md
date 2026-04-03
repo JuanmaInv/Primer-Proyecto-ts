@@ -46,3 +46,40 @@ Flujo de trabajo para el proximo proyecto:
 2. Copiar los archivos de configuración (package.json, tsconfig.json, .gitignore, .github/). Eliminar el node module.
 3. Ejecutar pnpm install (esto descargará todo automáticamente basándose en el package.json que copiaste e instalara nuevamente el node module).
 4. ¡Listo!, Empezar a programar la lógica de "gimnasio" y "tests" para el nuevo proyecto.
+
+
+Diagrama de clases general
+PRECIOS (constantes, si lo cambio en precios.ts, se actualiza en todos lados)
+    ↓
+SOCIO (clase abstracta base, define las propiedades del socio, define metodos abestractos y metodos como mostrarInfo() y calcularCuota())
+    ↙           ↘
+SocioComun    SocioVip
+    ↘           ↙
+GIMNASIO (gestiona la lista, tiene metodos para agregar, buscar, eliminar, obtener vips, obtener comunes, calcular ingresos totales y listar socios)
+        ↓
+INDEX.TS (punto de entrada, donde se crea el gimnasio y se agregan socios y se muestran en pantalla. Se ejecuta con pnpm dev)
+        ↓
+TESTS (verifican todo lo anterior, se ejecuta con pnpm test)
+
+- Conceptos aplicados de POO:
+Herencia, socio comun y socio vip se heredan de socio
+Abstraccion, socio es una clase abstracta
+Polimorfismo, con el metodo mostrarInfo() y calcularCuota() que se comportan diferente segun el tipo de socio
+Encapsulamiento, listaSocios es privada y solo se puede acceder a ella mediante metodos publicos. (no hay get/set, es simple)
+Composicion, el gimnasio esta compuesto por socios y el equipamiento esta compuesto por pesas, maquinas, etc. (falta implementar)
+Tests unitarios, se implementaron tests unitarios 
+CI (Integración Continua), github actions se encarga de ejecutar los tests automaticamente cada vez que realizamos un push
+
+- Diferencia entre index y test:
+index se ocupa para el usuario final
+test solo ve el programador (es para verificar que todo funcione correctamente)
+
+index se ejecuta con pnpm dev
+test se ejecuta con pnpm test
+
+index muestra en pantalla lo que hace el programa realmente
+test muestra en pantalla si el programa funciona correctamente
+
+Por ejemplo, que al enchufar la heladera pueda usarla (index) y que al enchufarla se prenda la luz (test).
+
+Por eso los tests existen: arrojan errores que el programa real no detecta solo o que nosotros no detectamos al programar.
