@@ -1,6 +1,35 @@
-// aca tendria que ir una forma de ordenar los horarios de los socios en la BD
-// por ejemplo, si un socio entra a las 8, no puede salir a las 12, tiene que salir a las 9 (tiene 1 hora)
-// puede ir todos los dias de lunes a viernes de 8 a 22 y sabado de 8 a 14
-// y los domingos cerrado
-// para poder ingresar al gym, debe tener la cuota al dia
-// de lo contrario con id y un qr que se puede generar no se aceptara su ingreso y tendra que irse
+export class GestorHorarios {
+    // Reglas del gimnasio:
+    // Lunes a Viernes: 8:00 a 22:00
+    // Sabado: 8:00 a 14:00
+    // Domingo: Cerrado
+    static esHorarioLaboral(fecha: Date): { valido: boolean; motivo: string } {
+        const dia = fecha.getDay(); // 0: Dom, 1: Lun... 6: Sab
+        const hora = fecha.getHours();
+
+        if (dia === 0) {
+            return { valido: false, motivo: "El gimnasio esta cerrado los domingos." };
+        }
+
+        if (dia >= 1 && dia <= 5) { // Lunes a Viernes
+            if (hora < 8 || hora >= 22) {
+                return { valido: false, motivo: "Fuera de horario. L-V abrimos de 08:00 a 22:00." };
+            }
+        }
+
+        if (dia === 6) { // Sabado
+            if (hora < 8 || hora >= 14) {
+                return { valido: false, motivo: "Fuera de horario. Sabados abrimos de 08:00 a 14:00." };
+            }
+        }
+
+        return { valido: true, motivo: "Horario permitido." };
+    }
+
+    // Regla de permanencia: Maximo 1 hora
+    static esTiempoValido(entrada: Date, salida: Date): boolean {
+        const diferenciaMs = salida.getTime() - entrada.getTime();
+        const diferenciaMinutos = diferenciaMs / (1000 * 60);
+        return diferenciaMinutos <= 60;
+    }
+}

@@ -69,6 +69,7 @@ Encapsulamiento, listaSocios es privada y solo se puede acceder a ella mediante 
 Composicion, el gimnasio esta compuesto por socios y el equipamiento esta compuesto por pesas, maquinas, etc. (falta implementar)
 Tests unitarios, se implementaron tests unitarios 
 CI (Integración Continua), github actions se encarga de ejecutar los tests automaticamente cada vez que realizamos un push
+Principios SOLID, aplicado por ejemplo la segregacion de interfaces teniendo interfaces para vip y para comun... para que el vip no deba implementar metodos que no necesita o viceversa.
 
 - Diferencia entre index y test:
 index se ocupa para el usuario final

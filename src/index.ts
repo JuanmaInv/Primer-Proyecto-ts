@@ -2,47 +2,34 @@ import { Gimnasio } from "./gimnasio";
 import { SocioComun } from "./socioComun";
 import { SocioVip } from "./socioVip";
 
-console.log("=== INICIANDO SISTEMA DEL GIMNASIO ===\n");
+const gym = new Gimnasio();
 
-// 1. Instanciar el gimnasio
-const miGimnasio = new Gimnasio();
+console.log("====================================================");
+console.log("   SISTEMA DE GESTION Y CONTROL DE ACCESO - GYM ANGRY  ");
+console.log("====================================================\n");
 
-// 2. Crear socios con su cuota inicial
-console.log("--- Registrando Socios ---");
-// Juan empieza como Común ($5000)
-const socio1 = new SocioComun(12345678, "Juan Pérez", 5000);
-// María empieza como VIP ($7000)
-const socio2 = new SocioVip(87654321, "María Gómez", 7000, "Acceso a Spa y Toallas gratis");
-// Carlos empieza como Común ($5000)
-const socio3 = new SocioComun(11223344, "Carlos López", 5000);
+const juan = new SocioComun(12345678, "Juan Perez", 5000);
+const maria = new SocioVip(87654321, "Maria Gomez", 7000, "Acceso a Spa");
+const carla = new SocioComun(11223344, "Carla Solis", 5000); 
+carla.cuota = 2000; // Simulacion de deuda
 
-miGimnasio.agregarSocio(socio1);
-miGimnasio.agregarSocio(socio2);
-miGimnasio.agregarSocio(socio3);
+gym.agregarSocio(juan);
+gym.agregarSocio(maria);
+gym.agregarSocio(carla);
 
-// 3. Mostrar información inicial
-console.log("\n--- Info Inicial de Socios ---");
-miGimnasio.listarSocios().forEach(s => console.log(s.mostrarInfo()));
+const t1 = new Date("2026-04-06T10:00:00");
+const t2 = new Date("2026-04-05T12:00:00"); // Domingo
+const t3 = new Date("2026-04-06T11:00:00");
 
-// 4. Procesar pagos del Siguiente Mes (Cambios de estado automáticos)
-console.log("\n--- Procesando Pagos del Mes Siguiente ---");
+// FLUJO DE ACCESO
+try { console.log(gym.validarIngreso(juan.dni, t1)); } catch (e: any) { console.error(e.message); }
+try { console.log(gym.validarIngreso(carla.dni, t1)); } catch (e: any) { console.error(e.message); }
+try { console.log(gym.validarIngreso(maria.dni, t2)); } catch (e: any) { console.error(e.message); }
 
-// Juan Pérez (Común) paga $7000 → Debería subir a VIP
-miGimnasio.cambiarEstado(12345678, 7000);
+// FLUJO DE SALIDA
+console.log(gym.registrarSalida(juan.dni, t3));
 
-// María Gómez (VIP) paga $5000 → Debería bajar a Común
-miGimnasio.cambiarEstado(87654321, 5000);
-
-// Carlos López (Común) paga $5000 → Se mantiene igual
-miGimnasio.cambiarEstado(11223344, 5000);
-
-// 5. Resumen del gimnasio
-console.log("\n--- Resumen Final del Gimnasio ---");
-console.log(`Total de socios VIP: ${miGimnasio.obtenerVips().length}`);
-console.log(`Total de socios Comunes: ${miGimnasio.obtenerComunes().length}`);
-console.log(`Ingresos totales este mes: $${miGimnasio.calcularIngresosTotales()}`);
-
-console.log("\n--- Estado Final de Socios ---");
-miGimnasio.listarSocios().forEach(s => console.log(s.mostrarInfo()));
-
-console.log("\n=== FIN DE LA EJECUCIÓN ===");
+console.log("\n====================================================");
+console.log("         ESTADO FINAL DEL SISTEMA                   ");
+console.log("====================================================");
+gym.listarSocios().forEach(s => console.log(s.mostrarInfo()));

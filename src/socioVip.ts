@@ -1,22 +1,35 @@
 import { Socio } from "./socio";
-import { PRECIOS } from "./precios";
+import type { EquipamientoVip } from "./IequipamientoVip";
 
-// HERENCIA y SOBREESCRITURA: SocioVip hereda metodos y atributos de Socio
-export class SocioVip extends Socio {
-    tipo: string = "VIP";
+export class SocioVip extends Socio implements EquipamientoVip {
+    // Equipamiento Comun (Heredado de la Interfaz)
+    pesas: string = "Pro 5kg-50kg";
+    bicicleta: string = "Electrica Pro";
+    cintaCorrer: string = "Motorizada Pro";
+    bancoPlano: string = "Ajustable Pro";
+    bancoInclinado: string = "Ajustable Pro";
 
-    // Constructor con atributo extra: beneficios (exclusivo del socio VIP)
-    constructor(dni: number, nombre: string, cuota: number = (PRECIOS.CUOTA_BASE + PRECIOS.ADICIONAL_VIP), public beneficios: string = "Acceso a Spa y Toallas gratis") {
+    // Equipamiento VIP
+    kinesiologia: string = "Disponible";
+    rutinasPersonalizadas: string = "Si";
+    toallas: string = "Si (Ilimitadas)";
+    botellasDeAgua: string = "Gratis";
+
+    constructor(dni: number, nombre: string, cuota: number, public beneficios: string = "Sin beneficios") {
         super(dni, nombre, cuota);
     }
 
-    // Sobreescritura del metodo abstracto: calcula la cuota para el socio vip
+    get tipo(): string { return "VIP"; }
+
     calcularCuota(): number {
         return this.cuota;
     }
 
-    // POLIMORFISMO: sobreescribe mostrarInfo() para también mostrar los beneficios del VIP
+    equipamientoPermitido(): string {
+        return `[ACCESO TOTAL] Equipamiento Premium, Spa y Kinesiologia.`;
+    }
+
     mostrarInfo(): string {
-        return `[${this.tipo.toUpperCase()}] DNI: ${this.dni} | Nombre: ${this.nombre} | Cuota: $${this.calcularCuota()} | Beneficios: ${this.beneficios}`;
+        return `[VIP] DNI: ${this.dni} | Nombre: ${this.nombre} | Cuota: $${this.cuota} | Beneficios: ${this.beneficios} | ${this.equipamientoPermitido()}`;
     }
 }

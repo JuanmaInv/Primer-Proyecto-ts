@@ -1,17 +1,28 @@
 import { Socio } from "./socio";
-import { PRECIOS } from "./precios";
+import type { EquipamientoComun } from "./IequipamientoComun";
 
-// Tipo de Socio Comun (clase hija) que hereda de Socio (clase padre)
-export class SocioComun extends Socio {
-    tipo: string = "Común";
+export class SocioComun extends Socio implements EquipamientoComun {
+    pesas: string = "Standard 5kg-20kg";
+    bicicleta: string = "Fija Standard";
+    cintaCorrer: string = "Manual";
+    bancoPlano: string = "Standard";
+    bancoInclinado: string = "Standard";
 
-    // Constructor: recibe el DNI, el nombre y la cuota del socio
-    constructor(dni: number, nombre: string, cuota: number = PRECIOS.CUOTA_BASE) {
+    constructor(dni: number, nombre: string, cuota: number) {
         super(dni, nombre, cuota);
     }
 
-    // Sobreescritura del metodo abstracto: retorna la cuota pagada
+    get tipo(): string { return "Comun"; }
+
     calcularCuota(): number {
         return this.cuota;
+    }
+
+    equipamientoPermitido(): string {
+        return `[COMUN] Pesas, Bicicleta, Cinta, Bancos. SIN ACCESO A VIP.`;
+    }
+
+    mostrarInfo(): string {
+        return `[COMUN] DNI: ${this.dni} | Nombre: ${this.nombre} | Cuota: $${this.cuota} | ${this.equipamientoPermitido()}`;
     }
 }
