@@ -5,13 +5,13 @@ import { PRECIOS } from "./precios";
 export class SocioComun extends Socio {
     tipo: string = "Común";
 
-    // Constructor explícito para mostrar claramente los datos necesarios
-    constructor(id: number, nombre: string) {
-        super(id, nombre);
+    // Constructor: recibe el DNI, el nombre y la cuota del socio
+    constructor(dni: number, nombre: string, cuota: number = PRECIOS.CUOTA_BASE) {
+        super(dni, nombre, cuota);
     }
 
-    // Sobreescritura del metodo abstracto: calcula la cuota para el socio comun
+    // Sobreescritura del metodo abstracto: retorna la cuota pagada
     calcularCuota(): number {
-        return PRECIOS.CUOTA_BASE;
+        return this.cuota;
     }
 }
