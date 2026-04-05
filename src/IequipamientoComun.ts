@@ -1,7 +1,7 @@
-export interface EquipamientoComun {
-    pesas: string;
-    bicicleta: string;
-    cintaCorrer: string;
-    bancoPlano: string;
-    bancoInclinado: string;    
+export interface EquipamientoComun {//interfaz para el equipamiento comun
+    pesas: string; //pesas
+    bicicleta: string; //bicicleta
+    cintaCorrer: string; //cinta de correr
+    bancoPlano: string; //banco plano
+    bancoInclinado: string; //banco inclinado
 }
